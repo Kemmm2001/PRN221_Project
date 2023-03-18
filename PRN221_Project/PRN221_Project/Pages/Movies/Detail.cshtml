@@ -2,3 +2,96 @@
 @model PRN221_Project.Pages.Movies.DetailModel
 @{
 }
+<h1>Detail Movie</h1>
+@*<form method="post">
+    <input asp-for="@Model.movie.MovieId" style="display:none" />
+    Movie Name:<input asp-for="@Model.movie.MovieName" />
+    <span asp-validation-for="@Model.movie.MovieName" />
+    <br />
+    Category:<input asp-for="@Model.movie.Cate.CateName" />
+    <span asp-validation-for="@Model.movie.Cate.CateName" />
+    <br />
+    Time:<input asp-for="@Model.movie.Time" />
+    <span asp-validation-for="@Model.movie.Time" />
+    <br />
+    Description:<input asp-for="@Model.movie.Description" />
+    <span asp-validation-for="@Model.movie.Description" />
+    <br />
+    Cost:<input asp-for="@Model.movie.Cost" />
+    <span asp-validation-for="@Model.movie.Cost" />
+    <br />
+    Quantity:<input asp-for="@Model.movie.Quantity" />
+    <span asp-validation-for="@Model.movie.Quantity" />
+    <br />
+    <input type="submit" value="Edit" />
+</form>*@
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input asp-for="@Model.movie.MovieId" style="display:none" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="movie.MovieName" class="control-label"></label>
+                <input asp-for="movie.MovieName" class="form-control" />
+                <span asp-validation-for="movie.MovieName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="movie.Cate.CateId" class="control-label"></label>
+                <select asp-for="movie.Cate.CateId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="movie.Time" class="control-label"></label>
+                <input asp-for="movie.Time" class="form-control" />
+                <span asp-validation-for="movie.Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="movie.Description" class="control-label"></label>
+                <input asp-for="movie.Description" class="form-control" />
+                <span asp-validation-for="movie.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="movie.Cost" class="control-label"></label>
+                <input asp-for="movie.Cost" class="form-control" />
+                <span asp-validation-for="movie.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="movie.Quantity" class="control-label"></label>
+                <input asp-for="movie.Quantity" class="form-control" />
+                <span asp-validation-for="movie.Quantity" class="text-danger"></span>
+            </div>
+            @*            <div class="form-group form-check">
+            <label class="form-check-label">
+            <input class="form-check-input" asp-for="Product.Discontinued" /> @Html.DisplayNameFor(model => model.Product.Discontinued)
+            </label>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<table class="table mt-3 table-bordered">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Phone</th>
+            <th>Booking Time</th>
+            <th>Seat</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        @foreach (var p in Model.users)
+        {
+            <tr>
+                <th>@p.UserName</th>
+                <th>@p.Phone</th>
+                <th>@p.BookingTime</th>
+                <th>@p.Seat.SeatName</th>
+                <th>
+                    <a asp-page="Users/Delete?id=@p.UserId">Delete</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
