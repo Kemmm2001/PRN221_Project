@@ -1,0 +1,11 @@
+****Clone******
+
+git clone <Tên URL>
+
+****Trước Khi Push Phải pull về trước ******
+git pull
+
+****Push code lên git*****
+git add .
+git commit -m "Nội Dung push là gì "
+git push

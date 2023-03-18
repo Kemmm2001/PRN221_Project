@@ -1,0 +1,175 @@
+﻿@page
+@model PRN221_Project.Pages.IndexModel
+@using PRN221_Project.Models
+<h1>Management Movies</h1>
+
+@{
+    int id;
+    if (ViewBag.id == null)
+    {
+        id = 0;
+    }
+    else
+    {
+        id = ViewBag.id;
+    }
+    string search = ViewBag.searchName;
+
+}
+<div style="margin-top: 20px">
+    <form method="post" asp-page-handler="Search">
+        <input name="search" value="@search" style="border-radius: 5px;" />
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div class="cate_page">
+    <h5 style="margin-right:10px">Studio:</h5>
+    <form id="myForm" method="post" onchange="submitForm()">
+        <select name="cateId" class="cate_layout">
+            <option value="0">All</option>
+            @foreach (var c in ViewBag.cate as List<Category>)
+            {
+                if (c.CateId == id)
+                {
+                    <option selected="1" value="@c.CateId">@c.CateName</option>
+                }
+                else
+                {
+                    <option value="@c.CateId">@c.CateName</option>
+                }
+            }
+        </select>
+    </form>
+</div>
+<div class="addMovies">
+    <button class="addMovies_layout">Add New Movie</button>
+</div>
+<div>
+    <h3 style="margin-bottom:30px">List Movies</h3>
+    <table class="table mt-3 table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    MovieName
+                </th>
+                <th>
+                    Studio
+                </th>
+                <th>
+                    Time
+                </th>
+                <th>
+                    Cost
+                </th>
+                <th style="width: 150px">
+                    Tickets Booked
+                </th>
+                <th>
+                    Status
+                </th>
+                @if (ViewBag.acount == "admin")
+                {
+                    <th colspan="2">Function of Admin</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in ViewBag.list as List<Movie>)
+            {
+                <tr>
+                    <td>
+                        @m.MovieName
+                    </td>
+                    <td>
+                        @m.Cate.CateName
+                    </td>
+                    <td>
+                        @m.Time
+                    </td>
+                    <td>
+                        @m.Cost $
+                    </td>
+                    <td>
+                        @m.Quantity/10
+                    </td>
+                    @if (m.Quantity == 10)
+                    {
+                        <td style="color:red">
+                            Full
+                        </td>
+                    }
+                    else
+                    {
+                        if (ViewBag.acount != null)
+                        {
+                            <td style="color: rgb(9 135 225);cursor: pointer;">
+                                <a href="/Users/Add">Book</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="color: rgb(9 135 225);cursor: pointer;">
+                                <a href="/Account/Login">Book</a>
+                            </td>
+                        }
+                    }
+                    @if (ViewBag.acount == "admin")
+                    {
+                        <td>
+                            <button style="background: rgb(9 135 225)"><a href="/Products/edit?id=" style="color:white">Edit</a></button>
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="delete" asp-route-id="">
+                                <button style="background: #f20c0c;color:white" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @for (int i = 0; i < 5; i++)
+        {
+            <button>
+                <span>@i</span>
+            </button>
+        }
+    </div>
+</div>
+
+<script>
+      function submitForm() {
+        document.getElementById("myForm").submit();
+    }
+</script>
+
+<style>
+    .cate_layout {
+        width: 150px;
+        border-radius: 5px;
+        height: 28px;
+    }
+
+    .cate_page {
+        display: flex;
+        margin-bottom: 40px;
+        margin-top: 30px;
+    }
+
+    td {
+        font-size: 18px;
+    }
+
+    .addMovies {
+        float: right;
+    }
+
+    .addMovies_layout {
+        border-radius: 5px;
+        height: 36px;
+        width: 187px;
+        color: white;
+        background: green;
+    }
+</style>
