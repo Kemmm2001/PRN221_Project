@@ -80,17 +80,19 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody id="tableBody">
-        @foreach (var p in Model.users)
+    <tbody>
+        @foreach (var p in @Model.users)
         {
             <tr>
-                <th>@p.UserName</th>
-                <th>@p.Phone</th>
-                <th>@p.BookingTime</th>
-                <th>@p.Seat.SeatName</th>
-                <th>
-                    <a asp-page="Users/Delete?id=@p.UserId">Delete</a>
-                </th>
+                <td>@p.UserName</td>
+                <td>@p.Phone</td>
+                <td>@p.BookingTime</td>
+                <td>@p.Seat.SeatName</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@p.UserId">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
