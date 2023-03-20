@@ -51,7 +51,7 @@ namespace PRN221_Project.Pages
         public void OnPostSearch()
         {
 
-            string search = Request.Form["search"].ToString();         
+            string search = Request.Form["search"].ToString();
             var ListMovies = DB.Movies.Include("Cate").Where(x => x.MovieName.Contains(search)).ToList();
             list = ListMovies;
             cate = DB.Categories.ToList();
@@ -64,6 +64,17 @@ namespace PRN221_Project.Pages
             cate = DB.Categories.ToList();
             HttpContext.Session.Remove("account");
             return Page();
+        }
+        public IActionResult OnPostDelete(int id)
+        {
+            List<User> user = new List<User>();
+            Movie movie = new Movie();
+            movie = DB.Movies.Where((x) => x.MovieId == id).FirstOrDefault();
+            user = DB.Users.Where(x => x.MovieId == id).ToList();
+            DB.Users.RemoveRange(user);
+            DB.Movies.Remove(movie);
+            DB.SaveChanges();         
+            return RedirectToPage("/Index");
         }
     }
 }
